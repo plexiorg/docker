@@ -1,4 +1,4 @@
-FROM arm64v8/openjdk:8u121-jdk-alpine
+FROM arm32v6/openjdk:8u131-jdk-alpine
 
 RUN apk add --no-cache git openssh-client curl unzip bash ttf-dejavu coreutils
 
@@ -66,7 +66,8 @@ USER ${user}
 
 COPY jenkins-support /usr/local/bin/jenkins-support
 COPY jenkins.sh /usr/local/bin/jenkins.sh
-ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
+#ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
